@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#CB202D</color>
-    <color name="colorPrimaryDark">#B71C1C</color>
+    <color name="colorPrimary">#332269</color>
+    <color name="colorPrimaryDark">#332269</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="LoginEnabledTextColor">#000000</color>
+    <color name="LoginDisabledTextColor">#B3B3B3</color>
+
     <color name="tabColor">#ECEFF1</color>
+
+    <color name="background">#EFEFEF</color>
+    <color name="placeholder_grey">#AAADC4</color>
+    <color name="placeholder_grey_20">#33AAADC4</color>
 </resources>
