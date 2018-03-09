@@ -1,6 +1,8 @@
 package com.a3dmorpher.login;
 
 
+import android.content.Context;
+
 /**
  * Created by ahextech on 7/3/18.
  */
@@ -17,7 +19,7 @@ public class LoginPresenterImpl implements LoginPresenterInterface, LoginInterac
     @Override
     public void onLoginButtonClicked(String email, String password) {
         view.showProgressDialog();
-        interactor.authenticateUser(this, email, password);
+        interactor.authenticateUser(this, email, password, (Context) view);
     }
 
     @Override
@@ -26,7 +28,7 @@ public class LoginPresenterImpl implements LoginPresenterInterface, LoginInterac
     }
 
     @Override
-    public void onAuthSuccess( ) {
+    public void onAuthSuccess() {
         view.hideProgressDialog();
         view.onSuccessfulLogin("Successful");
 

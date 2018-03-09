@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.a3dmorpher.POJO.RestaurantModelClass;
+import com.a3dmorpher.SessionManager;
 import com.a3dmorpher.foodpenguin.R;
 
 import java.util.List;
@@ -22,11 +23,14 @@ public class HomeScreenActivity extends AppCompatActivity implements HomeScreenC
     private HomeScreenPresenter presenter;
     private boolean isLoading = false;
     private int startIndex = 0;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        sessionManager = new SessionManager(this);
+        sessionManager.checkLogin();
         recyclerView = findViewById(R.id.main_home_recycler);
         mProgressbar = findViewById(R.id.main_home_progress);
         presenter = new HomeScreenPresenter(this);

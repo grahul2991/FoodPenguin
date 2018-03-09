@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-
 import com.a3dmorpher.foodpenguin.R;
 
 import butterknife.BindView;
@@ -27,9 +26,11 @@ public class SignUpDetailsFragment extends Fragment implements View.OnClickListe
     EditText etFirstName;
     @BindView(R.id.et_last_name)
     EditText etLastName;
+    @BindView(R.id.et_phone_number)
+    EditText etPhoneNumber;
     @BindView(R.id.btn_complete)
     Button btnCompleteReg;
-    private String username, password, firstName, lastName;
+    private String username, password, firstName, lastName, phoneNumber;
     private SignUpCompleteInterface signUpCompleteInterface;
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
@@ -69,7 +70,8 @@ public class SignUpDetailsFragment extends Fragment implements View.OnClickListe
     private void validateFields() {
         firstName = etFirstName.getText().toString();
         lastName = etLastName.getText().toString();
-        if (firstName.equals("") || lastName.equals("")) {
+        phoneNumber = etPhoneNumber.getText().toString();
+        if (firstName.equals("") || lastName.equals("") || phoneNumber.equals("")) {
             btnCompleteReg.setEnabled(false);
             btnCompleteReg.setTextColor(getResources().
                     getColor(R.color.LoginDisabledTextColor));

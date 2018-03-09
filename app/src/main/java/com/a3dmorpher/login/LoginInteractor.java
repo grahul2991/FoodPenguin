@@ -1,12 +1,14 @@
 package com.a3dmorpher.login;
 
+import android.content.Context;
+
 /**
  * Created by ahextech on 7/3/18.
  */
 
 public interface LoginInteractor {
 
-    void authenticateUser(onAuthCompletedListener listener, String email, String password);
+    void authenticateUser(onAuthCompletedListener listener, String email, String password, Context context);
 
     void validateFields(String email, String password, onValidateFieldListener validateFieldListener);
 
