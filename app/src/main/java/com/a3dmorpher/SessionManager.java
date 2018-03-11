@@ -8,14 +8,15 @@ import com.a3dmorpher.login.LoginActivity;
 
 import java.util.HashMap;
 
+import static com.a3dmorpher.Utils.APP_PREF_NAME;
 import static com.a3dmorpher.Utils.IS_LOGGED_IN;
+import static com.a3dmorpher.Utils.IS_REGISTERED;
 import static com.a3dmorpher.Utils.KEY_EMAIL;
 import static com.a3dmorpher.Utils.KEY_FIRST_NAME;
 import static com.a3dmorpher.Utils.KEY_LAST_NAME;
 import static com.a3dmorpher.Utils.KEY_PASSWORD;
 import static com.a3dmorpher.Utils.KEY_PHONE_NUMBER;
 import static com.a3dmorpher.Utils.KEY_PROFILE_PIC;
-import static com.a3dmorpher.Utils.PREF_NAME;
 import static com.a3dmorpher.Utils.SHARED_PREF_MODE;
 
 /**
@@ -29,7 +30,7 @@ public class SessionManager {
 
     public SessionManager(Context context) {
         this.context = context;
-        sharedPref = context.getSharedPreferences(PREF_NAME, SHARED_PREF_MODE);
+        sharedPref = context.getSharedPreferences(APP_PREF_NAME, SHARED_PREF_MODE);
         editor = sharedPref.edit();
     }
 
@@ -47,9 +48,8 @@ public class SessionManager {
         }
     }
 
-    public void registerUser() {
 
-    }
+
 
     public void logOutUser() {
         editor.clear();

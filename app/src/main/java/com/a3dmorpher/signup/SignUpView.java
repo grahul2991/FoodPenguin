@@ -12,4 +12,6 @@ public interface SignUpView {
     void onValidUserName();
 
     void showConnectionErrorMsg(String status);
+
+    void showDialog();
 }

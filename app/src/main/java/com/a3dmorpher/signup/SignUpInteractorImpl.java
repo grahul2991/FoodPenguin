@@ -1,26 +1,28 @@
 package com.a3dmorpher.signup;
 
 
+import android.content.Context;
+
+import com.a3dmorpher.DatabaseHelper;
+
 /**
  * Created by ahextech on 8/3/18.
  */
 
 public class SignUpInteractorImpl implements InteractorInterface {
     private onUserNameAvailability listener;
+    private DatabaseHelper databaseHelper;
 
 
     @Override
-    public void checkUserNameAvailability(onUserNameAvailability listener, String email) {
+    public void checkUserNameAvailability(onUserNameAvailability listener, String email, Context context) {
         this.listener = listener;
-        if (email.trim().length() > 0) {
-            if (email.equals("rahul@woohoo.com")) {
-                listener.onUserNameAvailable();
-            } else {
-                listener.onUserNameUnavailable(email);
-            }
+        databaseHelper = new DatabaseHelper(context);
+        if (databaseHelper.checkUser(email)) {
+            listener.onUserNameUnavailable(email);
+        } else {
+            listener.onUserNameAvailable();
         }
 
     }
-
-
 }

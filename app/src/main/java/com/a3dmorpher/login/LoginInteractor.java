@@ -16,6 +16,7 @@ public interface LoginInteractor {
         void onAuthSuccess();
 
         void onAuthFailure(String status);
+        void onUserNotRegistered();
 
     }
 

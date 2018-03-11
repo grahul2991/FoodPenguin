@@ -13,20 +13,32 @@
         android:layout_below="@id/tv_icon"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
-        android:text="@string/assistant_text"
+        android:text="Registration"
+        android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_profile_pic"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_below="@id/tv_home_assistant"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:src="@drawable/no_image"
         app:civ_border_color="@android:color/white"
         app:civ_border_width="1dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_select_profile_pic"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/first_name_layout"
+        android:layout_alignEnd="@+id/iv_profile_pic"
+        android:layout_alignRight="@+id/iv_profile_pic"
+        android:visibility="visible"
+        android:backgroundTint="@android:color/holo_purple"
+        android:src="@drawable/camera"/>
 
 
     <LinearLayout

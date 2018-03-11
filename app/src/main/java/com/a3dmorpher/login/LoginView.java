@@ -19,4 +19,6 @@ public interface LoginView {
 
 
     void onLoginFailure(String status);
+
+    void onUserNotRegistered();
 }

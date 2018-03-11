@@ -40,6 +40,13 @@ public class LoginPresenterImpl implements LoginPresenterInterface, LoginInterac
         view.onLoginFailure(status);
     }
 
+    @Override
+    public void onUserNotRegistered() {
+        view.hideProgressDialog();
+        view.onUserNotRegistered();
+
+    }
+
 
     @Override
     public void onValidationSuccess() {

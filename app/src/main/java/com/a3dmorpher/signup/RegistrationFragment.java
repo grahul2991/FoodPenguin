@@ -1,6 +1,7 @@
 package com.a3dmorpher.signup;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 
 import com.a3dmorpher.foodpenguin.R;
 
@@ -50,11 +50,12 @@ public class RegistrationFragment extends Fragment implements SignUpView, View.O
     TextView tvLogIn;
     @BindView(R.id.tv_choose_username)
     TextView tvPageTitle;
-
+    @BindView(R.id.tv_fragment_icon)
+    TextView tvAppTitle;
     @BindView(R.id.btn_proceed)
     Button btnProceed;
     private Context context;
-    private String email, username, password;
+    private String email, password;
     private SignUpPresenterImpl signUpPresenter;
     private ChangeFragments myInterface;
 
@@ -84,6 +85,10 @@ public class RegistrationFragment extends Fragment implements SignUpView, View.O
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_registration, container, false);
         ButterKnife.bind(this, view);
+        Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/coco_biker.ttf");
+        tvAppTitle.setTypeface(typeface);
+
+        context = getContext();
         myInterface = (ChangeFragments) getContext();
         this.context = getContext();
         signUpPresenter = new SignUpPresenterImpl(this);
@@ -112,8 +117,8 @@ public class RegistrationFragment extends Fragment implements SignUpView, View.O
     }
 
     private void validateUserName() {
-        username = etUserName.getText().toString();
-        if (username.equals("")) {
+        email = etUserName.getText().toString();
+        if (email.equals("")) {
             btnNext.setEnabled(false);
             tvButtonText.setTextColor(getResources().getColor(R.color.LoginDisabledTextColor));
         } else {
@@ -158,17 +163,21 @@ public class RegistrationFragment extends Fragment implements SignUpView, View.O
     }
 
     @Override
+    public void showDialog() {
+
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_log_in:
                 myInterface.startLoginActivity();
                 break;
             case R.id.layout_btn_next:
-                email = username + "@woohoo.com";
-                signUpPresenter.validateUserName(email);
+                signUpPresenter.validateUserName(email, getActivity());
                 break;
             case R.id.btn_proceed:
-                myInterface.loadFragments(email, password);
+                myInterface.loadProfileActivity(email, password);
 //                signUpPresenter.validateUserName(email, password, username);
                 break;
         }

@@ -8,21 +8,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.a3dmorpher.DatabaseHelper;
+import com.a3dmorpher.POJO.User;
 import com.a3dmorpher.foodpenguin.R;
+import com.a3dmorpher.homescreen.HomeScreenActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -33,13 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.app.Activity.RESULT_OK;
-
-/**
- * Created by ahextech on 8/3/18.
- */
-
-public class SignUpDetailsFragment extends Fragment implements View.OnClickListener {
+public class SignUpDetailsActivity extends AppCompatActivity implements View.OnClickListener {
     final int REQUEST_CODE_FOR_PICK_IMAGE = 100, CAMERA_REQUEST = 101;
     @BindView(R.id.et_first_name)
     EditText etFirstName;
@@ -55,8 +49,10 @@ public class SignUpDetailsFragment extends Fragment implements View.OnClickListe
     CircleImageView img_profile_profile_pic;
     AlertDialog dialog;
     CropImage.ActivityResult result;
-    private String username, password, firstName, lastName, phoneNumber, profilePicPath;
+    DatabaseHelper dbHelper;
+    private String email, password, firstName, lastName, phoneNumber, profilePicPath;
     private SignUpCompleteInterface signUpCompleteInterface;
+    private User user;
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -74,11 +70,11 @@ public class SignUpDetailsFragment extends Fragment implements View.OnClickListe
         }
     };
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        ButterKnife.bind(this, view);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_sign_up);
+        ButterKnife.bind(this);
         new Handler().postDelayed(new Runnable() {
                                       @Override
                                       public void run() {
@@ -87,10 +83,9 @@ public class SignUpDetailsFragment extends Fragment implements View.OnClickListe
                                   }, 700
 
         );
-//        signUpCompleteInterface = (SignUpCompleteInterface) getContext();
-        Bundle bundle = getArguments();
+        Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            username = bundle.getString("username");
+            email = bundle.getString("email");
             password = bundle.getString("password");
         }
         etFirstName.addTextChangedListener(textWatcher);
@@ -99,7 +94,7 @@ public class SignUpDetailsFragment extends Fragment implements View.OnClickListe
         validateFields();
         btnCompleteReg.setOnClickListener(this);
         fab_select_profile_pic.setOnClickListener(this);
-        return view;
+        dbHelper = new DatabaseHelper(this);
     }
 
     private void validateFields() {
@@ -122,10 +117,12 @@ public class SignUpDetailsFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_complete:
-//                signUpCompleteInterface.signUpCompleted();
+                registerUser();
+                Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                startHomeActivity();
                 break;
             case R.id.fab_select_profile_pic:
-                showCustomAlertDialog(getContext(), profilePicPath);
+                showCustomAlertDialog(this, profilePicPath);
                 break;
             case R.id.linear_custom_view_gallery:
                 Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -136,9 +133,28 @@ public class SignUpDetailsFragment extends Fragment implements View.OnClickListe
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 break;
             case R.id.linear_custom_view_remove_photo:
-                Toast.makeText(getActivity(), "Remove Photo", Toast.LENGTH_SHORT).show();
+                setProfilePic("");
+                Toast.makeText(this, "Photo Removed", Toast.LENGTH_SHORT).show();
                 dialog.cancel();
                 break;
+        }
+    }
+
+    private void startHomeActivity() {
+        startActivity(new Intent(this, HomeScreenActivity.class));
+        finish();
+    }
+
+    private void registerUser() {
+        if (!dbHelper.checkUser(email, password)) {
+            user = new User();
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setPhoneNumber(phoneNumber);
+            user.setProfilePicPath(profilePicPath);
+            dbHelper.addUser(user);
         }
     }
 
@@ -173,16 +189,16 @@ public class SignUpDetailsFragment extends Fragment implements View.OnClickListe
                         String uri = String.valueOf(data.getData());
                         CropImage.activity(Uri.parse(uri))
                                 .setAspectRatio(1, 1)
-                                .start(getActivity());
+                                .start(this);
                         dialog.cancel();
                         break;
                     case CAMERA_REQUEST:
                         Bitmap photo = (Bitmap) data.getExtras().get("data");
                         // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-                        String cameraUri = String.valueOf(getImagePath(getContext(), photo));
+                        String cameraUri = String.valueOf(getImagePath(getApplicationContext(), photo));
                         CropImage.activity(Uri.parse(cameraUri))
                                 .setAspectRatio(1, 1)
-                                .start(getActivity());
+                                .start(this);
                         dialog.cancel();
                         break;
                     case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:
@@ -196,18 +212,19 @@ public class SignUpDetailsFragment extends Fragment implements View.OnClickListe
 
     }
 
-    private void setProfilePic(String profilePicPath) {
+    private void setProfilePic(String path) {
+        this.profilePicPath = path;
         Glide.with(this)
                 .load(profilePicPath)
                 .apply(RequestOptions.errorOf(R.drawable.no_image))
                 .into(img_profile_profile_pic);
-        Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
     }
 
     public String getImagePath(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        profilePicPath = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return profilePicPath;
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return path;
     }
 }

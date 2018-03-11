@@ -25,7 +25,7 @@
     <string name="app_slogan">Burp out loud...</string>
 
     <string name="assistant_text">Home AI Assistant</string>
-    <string name="choose_username">Choose a Username for WooHoo</string>
+    <string name="choose_username">Enter your email</string>
     <string name="username_hint">username</string>
     <string name="existing_account_text">Already have an account?</string>
     <string name="username_taken">abc@woohoo.com is taken. Try another.</string>
@@ -43,4 +43,5 @@
     <string name="alert_box_title">Wrong Combination!</string>
     <string name="alert_message">The email address and password \ncombination you entered is wrong.</string>
     <string name="try_again">Try Again!</string>
+    <string name="app_tag_line">Never Go Hungry !!</string>
 </resources>

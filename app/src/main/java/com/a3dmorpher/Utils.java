@@ -15,6 +15,10 @@ public interface Utils {
 
     int SHARED_PREF_MODE = 0;
 
-    String PREF_NAME = "FoodPenguin";
+    String APP_PREF_NAME = "FoodPenguin";
+    String REG_PREF_NAME = "UserRegistration";
     String IS_LOGGED_IN = "isLoggedIn";
+
+    String IS_REGISTERED = "isRegistered";
+
 }

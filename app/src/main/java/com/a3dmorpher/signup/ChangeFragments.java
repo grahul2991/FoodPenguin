@@ -5,7 +5,7 @@ package com.a3dmorpher.signup;
  */
 
 public interface ChangeFragments {
-    void loadFragments(String username, String password);
+    void loadProfileActivity(String email, String password);
 
     void startLoginActivity();
 

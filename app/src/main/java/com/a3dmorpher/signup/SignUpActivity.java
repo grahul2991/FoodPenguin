@@ -14,7 +14,7 @@ import com.a3dmorpher.login.LoginActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SignUpActivity extends AppCompatActivity implements ChangeFragments, SignUpCompleteInterface {
+public class SignUpActivity extends AppCompatActivity implements ChangeFragments {
     @BindView(R.id.frameLayout_container)
     FrameLayout container;
     private FragmentManager fragmentManager;
@@ -37,15 +37,14 @@ public class SignUpActivity extends AppCompatActivity implements ChangeFragments
     }
 
     @Override
-    public void loadFragments(String username, String password) {
-        SignUpDetailsFragment detailsFragment = new SignUpDetailsFragment();
+    public void loadProfileActivity(String email, String password) {
+        intent = new Intent(this, SignUpDetailsActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("username", username);
+        bundle.putString("email", email);
         bundle.putString("password", password);
-        detailsFragment.setArguments(bundle);
-        transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.frameLayout_container, detailsFragment);
-        transaction.commit();
+        intent.putExtras(bundle);
+        startActivity(intent);
+        finish();
 
     }
 
@@ -64,12 +63,5 @@ public class SignUpActivity extends AppCompatActivity implements ChangeFragments
         startActivity(intent);
         finish();
 
-    }
-
-    @Override
-    public void signUpCompleted() {
-        transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.frameLayout_container, new SignUpCompleteFragment());
-        transaction.commit();
     }
 }

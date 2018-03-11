@@ -1,8 +1,11 @@
 package com.a3dmorpher.login;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +28,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity implements LoginView, View.OnClickListener {
-
+    @BindView(R.id.tv_icon)
+    TextView tvLogo;
     @BindView(R.id.et_email_address)
     EditText etEmail;
     @BindView(R.id.et_login_password)
@@ -71,7 +75,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         presenter = new LoginPresenterImpl(this);
-
+        Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/coco_biker.ttf");
+        tvLogo.setTypeface(typeface);
         loginButton.setOnClickListener(this);
         ivHidePassword.setOnClickListener(this);
         ivShowPassword.setOnClickListener(this);
@@ -133,6 +138,27 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
             }
         });
         alertDialog.show();
+    }
+
+    @Override
+    public void onUserNotRegistered() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Warning");
+        dialog.setMessage("User is not registered. Register to use this app");
+        dialog.setPositiveButton("Sign UP", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
+            }
+        });
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        dialog.create().show();
+
     }
 
     @Override
