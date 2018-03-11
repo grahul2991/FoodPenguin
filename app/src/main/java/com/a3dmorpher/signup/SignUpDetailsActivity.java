@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.a3dmorpher.DatabaseHelper;
 import com.a3dmorpher.POJO.User;
+import com.a3dmorpher.SessionManager;
 import com.a3dmorpher.foodpenguin.R;
 import com.a3dmorpher.homescreen.HomeScreenActivity;
 import com.bumptech.glide.Glide;
@@ -141,6 +142,8 @@ public class SignUpDetailsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void startHomeActivity() {
+        SessionManager sessionManager = new SessionManager(this);
+        sessionManager.createSession(email, password);
         startActivity(new Intent(this, HomeScreenActivity.class));
         finish();
     }

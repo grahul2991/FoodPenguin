@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,7 +20,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.a3dmorpher.SessionManager;
 import com.a3dmorpher.foodpenguin.R;
+import com.a3dmorpher.homescreen.HomeScreenActivity;
 import com.a3dmorpher.signup.SignUpActivity;
 
 import butterknife.BindView;
@@ -119,7 +120,12 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
 
     @Override
     public void onSuccessfulLogin(String status) {
-        Snackbar.make(etEmail, status, Snackbar.LENGTH_SHORT).show();
+//        Snackbar.make(etEmail, status, Snackbar.LENGTH_SHORT).show();
+        SessionManager sessionManager = new SessionManager(this);
+        sessionManager.createSession(email, password);
+        sessionManager.isLoggedIn();
+        startActivity(new Intent(this, HomeScreenActivity.class));
+
     }
 
     @Override
