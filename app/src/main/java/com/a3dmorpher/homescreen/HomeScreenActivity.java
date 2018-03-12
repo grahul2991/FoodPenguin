@@ -1,5 +1,6 @@
 package com.a3dmorpher.homescreen;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,7 +23,9 @@ import android.widget.Toast;
 import com.a3dmorpher.POJO.RestaurantModelClass;
 import com.a3dmorpher.SessionManager;
 import com.a3dmorpher.foodpenguin.R;
+import com.a3dmorpher.resDetails.DetailsActivity;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class HomeScreenActivity extends AppCompatActivity implements HomeScreenContracts, NavigationView.OnNavigationItemSelectedListener {
@@ -115,8 +118,10 @@ public class HomeScreenActivity extends AppCompatActivity implements HomeScreenC
     }
 
     @Override
-    public void onRestaurantSelected(String resID) {
-        Toast.makeText(this, resID, Toast.LENGTH_SHORT).show();
+    public void onRestaurantSelected(RestaurantModelClass modelClass) {
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra("resDetails", (Serializable) modelClass);
+        startActivity(intent);
     }
 
     @Override

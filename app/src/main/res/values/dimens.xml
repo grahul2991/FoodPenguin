@@ -21,4 +21,6 @@
     <dimen name="poster_hero_height">192dp</dimen>
 
     <dimen name="registration_page_margin">32dp</dimen>
+    <dimen name="app_bar_height">280dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

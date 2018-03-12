@@ -24,7 +24,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name="com.a3dmorpher.login.LoginActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.a3dmorpher.signup.SignUpActivity"
             android:screenOrientation="portrait" />
@@ -40,9 +40,9 @@
         </activity>
         <activity android:name="com.a3dmorpher.signup.SignUpDetailsActivity" />
         <activity
-            android:name="com.a3dmorpher.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme"/>
+            android:name="com.a3dmorpher.resDetails.DetailsActivity"
+            android:theme="@style/AppTheme"
+            android:parentActivityName="com.a3dmorpher.homescreen.HomeScreenActivity"/>
     </application>
 
 </manifest>

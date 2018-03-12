@@ -18,5 +18,5 @@ public interface HomeScreenContracts {
 
     void showError(String message);
 
-    void onRestaurantSelected(String resID);
+    void onRestaurantSelected(RestaurantModelClass modelClass);
 }

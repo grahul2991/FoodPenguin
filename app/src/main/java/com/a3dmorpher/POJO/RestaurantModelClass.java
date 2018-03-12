@@ -1,10 +1,12 @@
 package com.a3dmorpher.POJO;
 
+import java.io.Serializable;
+
 /**
  * Created by ahextech on 6/3/18.
  */
 
-public class RestaurantModelClass {
+public class RestaurantModelClass implements Serializable {
     private String resID, resName, resPicUrl, resLocation, resRating;
     private String resCuisines;
 

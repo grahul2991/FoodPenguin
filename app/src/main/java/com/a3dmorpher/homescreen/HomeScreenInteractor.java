@@ -2,6 +2,7 @@ package com.a3dmorpher.homescreen;
 
 import android.content.Context;
 
+import com.a3dmorpher.DatabaseHelper;
 import com.a3dmorpher.POJO.RestaurantModelClass;
 import com.a3dmorpher.POJO.RestaurantResponseModelClass;
 import com.android.volley.AuthFailureError;
@@ -29,6 +30,7 @@ public class HomeScreenInteractor implements InteractorContracts {
     public List<RestaurantModelClass> fetchData(final onCompleteListener listener, int startIndex, int count, Context context) {
         this.listener = listener;
         restaurantList = new ArrayList<>();
+        final DatabaseHelper databaseHelper = new DatabaseHelper(context);
         String url
                 = "https://developers.zomato.com/api/v2.1/search?entity_id=4&entity_type=city" + "&start=" + startIndex + "&count=" + count;
 
@@ -37,6 +39,11 @@ public class HomeScreenInteractor implements InteractorContracts {
             @Override
             public void onResponse(String response) {
                 restaurantList = new RestaurantResponseModelClass().getRestaurantList(response);
+                for (RestaurantModelClass modelClass : restaurantList) {
+                    if (!databaseHelper.checkResDetails(modelClass.getResID())) {
+                        databaseHelper.addResDetails(modelClass);
+                    }
+                }
                 listener.onFetchSuccessful(restaurantList);
             }
         }, new Response.ErrorListener() {

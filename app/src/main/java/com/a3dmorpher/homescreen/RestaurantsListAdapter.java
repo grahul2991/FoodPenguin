@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -91,10 +92,10 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         })
                         .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
                         .into(viewHolder.ivResPhoto);
-                viewHolder.ivResPhoto.setOnClickListener(new View.OnClickListener() {
+                viewHolder.resDetailsLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        presenter.onRestaurantClicked(restaurantModel.getResID());
+                        presenter.onRestaurantClicked(restaurantModel);
                     }
                 });
                 break;
@@ -139,6 +140,7 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         private ImageView ivResPhoto;
         private TextView tvResName, tvResRating, tvResCuisines, tvResLocation;
         private ProgressBar mProgressbar;
+        private LinearLayout resDetailsLayout;
 
         public RestaurantViewHolder(View itemView) {
             super(itemView);
@@ -148,6 +150,7 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             tvResRating = itemView.findViewById(R.id.res_rating);
             tvResLocation = itemView.findViewById(R.id.res_location);
             tvResCuisines = itemView.findViewById(R.id.res_cuisines);
+            resDetailsLayout = itemView.findViewById(R.id.res_details_layout);
 
         }
     }

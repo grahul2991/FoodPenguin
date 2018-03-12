@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.a3dmorpher.POJO.RestaurantModelClass;
 import com.a3dmorpher.POJO.User;
 
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // User table name
     private static final String TABLE_USER = "user";
 
+    private static final String TABLE_RES_DETAILS = "res_details";
+
     // User Table Columns names
     private static final String COLUMN_USER_ID = "user_id";
     private static final String COLUMN_USER_FIRST_NAME = "first_name";
@@ -30,6 +33,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_USER_PASSWORD = "user_password";
     private static final String COLUMN_USER_PROFILE_PIC = "user_profile_pic";
     private static final String COLUMN_USER_PHONE_NUMBER = "user_phone_number";
+
+    //Res_Details Table Columns names
+    private static final String COLUMN_RES_IDS = "res_ids";
+    private static final String COLUMN_RES_ID = "res_id";
+    private static final String COLUMN_RES_NAME = "res_name";
+    private static final String COLUMN_RES_LOCATION = "res_location";
+    private static final String COLUMN_RES_CUISINES = "res_cuisines";
+    private static final String COLUMN_RES_PIC_URL = "res_pic_url";
+    private static final String COLUMN_RES_RATING = "res_rating";
+
     // create table sql query
     private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
             + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_USER_FIRST_NAME + " TEXT,"
@@ -37,8 +50,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_USER_PASSWORD + " TEXT," + COLUMN_USER_PROFILE_PIC + " TEXT,"
             + COLUMN_USER_PHONE_NUMBER + " TEXT " + ")";
 
+    private String CREATE_RES_DETAILS_TABLE = "CREATE TABLE " + TABLE_RES_DETAILS + "("
+            + COLUMN_RES_IDS + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_RES_ID + " TEXT,"
+            + COLUMN_RES_NAME + " TEXT," + COLUMN_RES_LOCATION + " TEXT," + COLUMN_RES_CUISINES +
+            " TEXT," + COLUMN_RES_PIC_URL + " TEXT," + COLUMN_RES_RATING + " TEXT " + ")";
+
     // drop table sql query
     private String DROP_USER_TABLE = "DROP TABLE IF EXISTS " + TABLE_USER;
+    private String DROP_RES_DETAILS_TABLE = "DROP TABLE IF EXISTS " + TABLE_RES_DETAILS;
 
     /**
      * Constructor
@@ -52,6 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_USER_TABLE);
+        db.execSQL(CREATE_RES_DETAILS_TABLE);
     }
 
 
@@ -60,6 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //Drop User Table if exist
         db.execSQL(DROP_USER_TABLE);
+        db.execSQL(DROP_RES_DETAILS_TABLE);
 
         // Create tables again
         onCreate(db);
@@ -86,59 +107,65 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void addResDetails(RestaurantModelClass modelClass){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(COLUMN_RES_ID,modelClass.getResID());
+        values.put(COLUMN_RES_NAME,modelClass.getResName());
+        values.put(COLUMN_RES_LOCATION,modelClass.getResLocation());
+        values.put(COLUMN_RES_CUISINES,modelClass.getResCuisines());
+        values.put(COLUMN_RES_RATING,modelClass.getResRating());
+        values.put(COLUMN_RES_PIC_URL,modelClass.getResPicUrl());
+
+        db.insert(TABLE_RES_DETAILS,null,values);
+        db.close();
+
+    }
+
+    public boolean checkResDetails(String resID) {
+
+        // array of columns to fetch
+        String[] columns = {
+                COLUMN_RES_IDS
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // selection criteria
+        String selection = COLUMN_RES_ID + " = ?";
+
+        // selection argument
+        String[] selectionArgs = {resID};
+
+        // query user table with condition
+        /**
+         * Here query function is used to fetch records from user table this function works like we use sql query.
+         * SQL query equivalent to this query function is
+         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com';
+         */
+        Cursor cursor = db.query(TABLE_RES_DETAILS, //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                      //filter by row groups
+                null);                      //The sort order
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
+
+        if (cursorCount > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+
     /**
      * This method is to fetch all user and return the list of user records
      *
      * @return list
      */
-//    public List<User> getAllUser() {
-//        // array of columns to fetch
-//        String[] columns = {
-//                COLUMN_USER_ID,
-//                COLUMN_USER_EMAIL,
-//                COLUMN_USER_NAME,
-//                COLUMN_USER_PASSWORD
-//        };
-//        // sorting orders
-//        String sortOrder =
-//                COLUMN_USER_NAME + " ASC";
-//        List<User> userList = new ArrayList<User>();
-//
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        // query the user table
-//        /**
-//         * Here query function is used to fetch records from user table this function works like we use sql query.
-//         * SQL query equivalent to this query function is
-//         * SELECT user_id,user_name,user_email,user_password FROM user ORDER BY user_name;
-//         */
-//        Cursor cursor = db.query(TABLE_USER, //Table to query
-//                columns,    //columns to return
-//                null,        //columns for the WHERE clause
-//                null,        //The values for the WHERE clause
-//                null,       //group the rows
-//                null,       //filter by row groups
-//                sortOrder); //The sort order
-//
-//
-//        // Traversing through all rows and adding to list
-//        if (cursor.moveToFirst()) {
-//            do {
-//                User user = new User();
-//                user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))));
-//                user.setName(cursor.getString(cursor.getColumnIndex(COLUMN_USER_NAME)));
-//                user.setEmail(cursor.getString(cursor.getColumnIndex(COLUMN_USER_EMAIL)));
-//                user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
-//                // Adding user record to list
-//                userList.add(user);
-//            } while (cursor.moveToNext());
-//        }
-//        cursor.close();
-//        db.close();
-//
-//        // return user list
-//        return userList;
-//    }
 
     /**
      * This method to update user record

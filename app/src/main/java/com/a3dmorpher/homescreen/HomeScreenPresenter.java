@@ -36,8 +36,8 @@ public class HomeScreenPresenter implements PresenterContracts, HomeScreenIntera
     }
 
     @Override
-    public void onRestaurantClicked(String resID) {
-        view.onRestaurantSelected(resID);
+    public void onRestaurantClicked(RestaurantModelClass modelClass) {
+        view.onRestaurantSelected(modelClass);
     }
 
     @Override
