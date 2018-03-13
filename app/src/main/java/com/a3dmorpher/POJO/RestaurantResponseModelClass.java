@@ -28,6 +28,7 @@ public class RestaurantResponseModelClass {
                 String resName = restaurantDetails.getString("name");
                 restaurantModelClass.setResName(resName);
                 restaurantModelClass.setResID(restaurantDetails.getString("id"));
+                restaurantModelClass.setResFeaturedPic(restaurantDetails.getString("featured_image"));
                 restaurantModelClass.setResPicUrl(restaurantDetails.getString("thumb"));
                 restaurantModelClass.setResCuisines(restaurantDetails.getString("cuisines"));
 

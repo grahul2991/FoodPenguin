@@ -7,7 +7,21 @@ import java.io.Serializable;
  */
 
 public class RestaurantModelClass implements Serializable {
-    private String resID, resName, resPicUrl, resLocation, resRating;
+    private String resID;
+    private String resName;
+    private String resPicUrl;
+    private String resLocation;
+    private String resRating;
+
+    public String getResFeaturedPic() {
+        return resFeaturedPic;
+    }
+
+    public void setResFeaturedPic(String resFeaturedPic) {
+        this.resFeaturedPic = resFeaturedPic;
+    }
+
+    private String resFeaturedPic;
     private String resCuisines;
 
     public String getResID() {

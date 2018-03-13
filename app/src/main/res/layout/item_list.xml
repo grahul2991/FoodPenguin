@@ -29,7 +29,7 @@
             android:scaleType="fitXY" />
 
         <TextView
-            android:id="@+id/res_rating"
+            android:id="@+id/res_ratings"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

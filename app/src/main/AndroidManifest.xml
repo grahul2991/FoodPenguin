@@ -41,8 +41,11 @@
         <activity android:name="com.a3dmorpher.signup.SignUpDetailsActivity" />
         <activity
             android:name="com.a3dmorpher.resDetails.DetailsActivity"
-            android:theme="@style/AppTheme"
-            android:parentActivityName="com.a3dmorpher.homescreen.HomeScreenActivity"/>
+            android:parentActivityName="com.a3dmorpher.homescreen.HomeScreenActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name="com.a3dmorpher.MenuActivity">
+
+        </activity>
     </application>
 
 </manifest>

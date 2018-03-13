@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     tools:context="com.a3dmorpher.resDetails.DetailsActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -19,17 +19,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:title="@string/large_text"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
+
             <ImageView
                 android:id="@+id/iv_res_pic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
                 android:layout_gravity="center"
-                android:contentDescription="@string/restaurant_image"/>
+                android:contentDescription="@string/restaurant_image"
+                android:scaleType="fitXY" />
 
 
             <android.support.v7.widget.Toolbar
@@ -42,15 +42,21 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_details" />
+        <include android:id="@+id/contents_layout"
+            layout="@layout/content_details" />
+    <ListView
+        android:id="@+id/menu_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_menu"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin" />
 
 </android.support.design.widget.CoordinatorLayout>

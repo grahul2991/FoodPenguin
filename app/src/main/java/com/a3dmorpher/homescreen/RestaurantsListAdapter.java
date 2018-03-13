@@ -4,12 +4,12 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -52,7 +52,7 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         switch (viewType) {
             case ITEM_TYPE:
                 view = LayoutInflater.from(context)
-                        .inflate(R.layout.item_list, parent, false);
+                        .inflate(R.layout.list_item, parent, false);
                 viewHolder = new RestaurantViewHolder(view);
                 break;
             case LOADING:
@@ -140,17 +140,17 @@ public class RestaurantsListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         private ImageView ivResPhoto;
         private TextView tvResName, tvResRating, tvResCuisines, tvResLocation;
         private ProgressBar mProgressbar;
-        private LinearLayout resDetailsLayout;
+        private CardView resDetailsLayout;
 
         public RestaurantViewHolder(View itemView) {
             super(itemView);
             ivResPhoto = itemView.findViewById(R.id.res_photo);
             mProgressbar = itemView.findViewById(R.id.res_photo_progress);
             tvResName = itemView.findViewById(R.id.res_name);
-            tvResRating = itemView.findViewById(R.id.res_rating);
+            tvResRating = itemView.findViewById(R.id.res_ratings);
             tvResLocation = itemView.findViewById(R.id.res_location);
             tvResCuisines = itemView.findViewById(R.id.res_cuisines);
-            resDetailsLayout = itemView.findViewById(R.id.res_details_layout);
+            resDetailsLayout = itemView.findViewById(R.id.res_details_frame_layout);
 
         }
     }

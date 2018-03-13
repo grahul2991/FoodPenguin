@@ -8,10 +8,125 @@
     tools:context="com.a3dmorpher.resDetails.DetailsActivity"
     tools:showIn="@layout/activity_details">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/details_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/res_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="2dp"
+            android:text="XYZ"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/res_name"
+            android:layout_marginTop="10dp"
+            android:padding="2dp"
+            android:text="xyz"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/res_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/res_name"
+
+            android:layout_marginTop="40dp"
+            android:padding="2dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/res_address"
+            android:layout_marginTop="10dp"
+            android:padding="2dp"
+            android:text="xyz"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/res_cuisines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/res_address"
+            android:layout_marginTop="45dp"
+            android:padding="2dp"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/res_cuisines"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/res_address"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.2"
+                android:padding="2dp"
+                android:text="xyz"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/res_ratings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/res_address"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.8"
+                android:gravity="end"
+                android:padding="2dp"
+                android:text="4.8"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/tv_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/res_cuisines"
+            android:layout_marginTop="50dp"
+            android:padding="2dp"
+            android:text="xyz"
+            android:textSize="16sp" />
+
+        <ProgressBar
+            android:id="@+id/review_progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/menu_listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_menu"
+            android:nestedScrollingEnabled="true" />
+
+    </RelativeLayout>
+
 
 </android.support.v4.widget.NestedScrollView>
